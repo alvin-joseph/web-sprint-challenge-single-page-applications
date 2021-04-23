@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Switch, Route, Link } from 'react-router-dom';
 import axios from 'axios';
 
+import './App.css';
+
 import * as yup from 'yup';
 
 //importing components
@@ -101,8 +103,10 @@ const App = () => {
     <div className="App">
       <nav>
         <h1 className='shop-header'>Lambda Eats</h1>
-        <div className="nav-links">
+        <div className="nav-link1">
           <Link to='/'>Home</Link>
+        </div>
+        <div className="nav-link2">
           <Link to='/pizza'>Order</Link>
         </div>
       </nav>

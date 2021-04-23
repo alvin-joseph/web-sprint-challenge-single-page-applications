@@ -2,6 +2,89 @@ import React from 'react';
 
 import { useParams, useHistory } from "react-router-dom";
 
+import styled from 'styled-components';
+import { formUrl, theme } from '../theme/theme'
+
+//style
+const FormContainer = styled.div`
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+
+    h2 {
+        color:${pr => pr.theme.primaryColor};
+        font-size:2.5rem;
+        margin-bottom:1%;
+    }
+
+    img {
+        object-fit:cover;
+        height: 50vh;
+        width: 100%;
+    }
+
+    input, select, button {
+        margin: 3% 0;
+        font-family: 'Amaranth', sans-serif;
+        font-size: 1rem;
+    }
+
+    button {
+        padding:.5%;
+    }
+`
+
+const Divider = styled.div`
+    background-color:${pr => pr.theme.gray};
+    padding:2%;
+
+    h3, h4 {
+        font-size:1.5rem;
+    }
+`
+
+const Errors = styled.div`
+    color:${pr => pr.theme.errorColor};
+    margin-top:1%;
+`
+
+const Dropdown = styled.div`
+    select {
+        width:12%;
+    }
+`
+
+const Special = styled.div`
+    input {
+        width:15%;
+    }
+`
+
+const Radio = styled.div`
+    input {
+        margin:2%;
+    }
+`
+
+const Checkbox = styled.div`
+    input {
+        margin:2%;
+    }
+`
+
+const Name = styled.div`
+    h3 {
+        font-size:1.8rem;
+        margin-top:1%;
+    }
+
+    input {
+        width:15%;
+    }
+`
+//end style
+
+
 export default function OrderForm(props) {
     const {} = useParams();
 
@@ -13,26 +96,26 @@ export default function OrderForm(props) {
         change(name, valueToUse);
     }
 
+    const history = useHistory()
+    const routeToDetails = () => {
+        history.push('/pizza/details')
+    }
+
     const onSubmit = evt => {
         evt.preventDefault();
         submit();
         routeToDetails();
     }
 
-    const history = useHistory()
-    const routeToDetails = () => {
-        history.push('/pizza/details')
-    }
-
     return (
         <form className='form container' onSubmit={onSubmit} id='pizza-form'>
-            <div className='form-container'>
+            <FormContainer>
                 <div className="header">
-                    <h1>Alvin's Pizzaria!</h1>
-                    <img src="" alt="pizza"/>
+                    <h2>Alvin's Pizzaria!</h2>
+                    <img src={formUrl} alt="pizza"/>
                 </div>
-                <div className="name">
-                    <h4>Build Your Own Pizza!</h4>
+                <Name>
+                    <h3>Build Your Own Pizza!</h3>
                     <label>Please enter your name&nbsp;
                         <input 
                         type="text"
@@ -42,32 +125,34 @@ export default function OrderForm(props) {
                         name="name"
                         placeholder="insert name here.."
                         />
-                        <div>{errors.name}</div>
+                        <Errors>{errors.name}</Errors>
                     </label>
-                </div>
+                </Name>
                 
-                <div className="label">
+                <Divider>
                     <h3>Please choose a Size</h3>
                     <h4>Required</h4>
-                    <div>{errors.size}</div>
-                </div>
-  
-                <label>Size
-                    <select id='size-dropdown' value={values.size} name="size" onChange={onChange}>
-                        <option value=''>-- Please Choose a Size --</option>
-                        <option value='Small'>Small</option>
-                        <option value='Medium'>Medium</option>
-                        <option value='Large'>Large</option>
-                    </select>
-                </label>
+                    <Errors>{errors.size}</Errors>
+                </Divider>
 
-                <div className="label">
+                <Dropdown>
+                    <label>Size
+                        <select id='size-dropdown' value={values.size} name="size" onChange={onChange}>
+                            <option value=''>-- Please Choose a Size --</option>
+                            <option value='Small'>Small</option>
+                            <option value='Medium'>Medium</option>
+                            <option value='Large'>Large</option>
+                        </select>
+                    </label>
+                </Dropdown>
+
+                <Divider>
                     <h3>Please Choose a Sauce</h3>
                     <h4>Required</h4>
-                    <div>{errors.sauce}</div>
-                </div>
+                    <Errors>{errors.sauce}</Errors>
+                </Divider>
 
-                <div className="radio">
+                <Radio>
                     <label>Red Sauce
                         <input 
                         type='radio'
@@ -104,14 +189,14 @@ export default function OrderForm(props) {
                         onChange={onChange}
                         />
                     </label>
-                </div>
+                </Radio>
 
-                <div className="label">
+                <Divider>
                     <h3>Add Toppings</h3>
                     <h4>Choose up to 4</h4>
-                </div>
+                </Divider>
 
-                <div className="toppings">
+                <Checkbox>
                     <label>Pepperoni
                     <input 
                     type='checkbox'
@@ -147,14 +232,13 @@ export default function OrderForm(props) {
                     onChange={onChange}
                     />
                     </label>
-                </div>
+                </Checkbox>
 
-                <div className="label">
+                <Divider>
                     <h3>Special Instructions</h3>
-                    <h4>Required</h4>
-                </div>
+                </Divider>
 
-                <div className="special">
+                <Special>
                     <label>Anything else?
                         <input
                         id='special-text'
@@ -165,7 +249,7 @@ export default function OrderForm(props) {
                         placeholder="Anything esle you would like to add?"
                         />
                     </label>
-                </div>
+                </Special>
 
                 <div className='submit'>
                     <button 
@@ -176,7 +260,7 @@ export default function OrderForm(props) {
                     </button> 
                 </div>
                 
-            </div>
+            </FormContainer>
         </form>
     )
 }

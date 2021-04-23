@@ -1,6 +1,31 @@
-import React from 'react'
+import React from 'react';
 
-import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom';
+
+import { homeUrl, theme } from '../theme/theme';
+import styled from 'styled-components';
+
+const Container = styled.div`
+    display:flex;
+    flex-direction:column;
+
+    img {
+        height: 70vh;
+        object-fit: cover;
+    }
+
+    button {
+        width: 15%;
+        height: 5vh;
+        margin-top: 3%;
+        font-size: 1.5rem;
+        color:${pr => pr.theme.primaryColor};
+
+        &:hover {
+            cursor:pointer;
+        }
+    }
+`
 
 export default function Home() {
     const history = useHistory();
@@ -10,19 +35,21 @@ export default function Home() {
     }
 
     return (
-        <div className='home-wrapper'>
+        <Container>
             <img
             className='home-image'
-            src='https://images.unsplash.com/photo-1588315029754-2dd089d39a1a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80'
+            src={homeUrl}
             alt='pizza'
             />
-            <button
-            onClick={routeToShop}
-            className='md-button shop-button'
-            id='order-pizza'
-            >
-            Pizza?
-            </button>
-        </div>
+            <div>
+                <button
+                onClick={routeToShop}
+                className='md-button shop-button'
+                id='order-pizza'
+                >
+                Pizza?
+                </button>
+            </div>
+        </Container>
     )
 }

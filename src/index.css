@@ -124,6 +124,7 @@ table {
 }
 html {
   box-sizing: border-box;
+  font-family: 'Chewy', cursive;
 }
 *, *:before, *:after {
   box-sizing: inherit;
