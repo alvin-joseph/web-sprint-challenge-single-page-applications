@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useParams, Route, useRouteMatch } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 
 export default function OrderForm(props) {
     const {} = useParams();
@@ -16,6 +16,12 @@ export default function OrderForm(props) {
     const onSubmit = evt => {
         evt.preventDefault();
         submit();
+        routeToDetails();
+    }
+
+    const history = useHistory()
+    const routeToDetails = () => {
+        history.push('/pizza/details')
     }
 
     return (
@@ -25,28 +31,25 @@ export default function OrderForm(props) {
                     <h1>Alvin's Pizzaria!</h1>
                     <img src="" alt="pizza"/>
                 </div>
-                {/* <div className='errors'> */}
-                    {/* validation errors */}
-                    {/* {errors.name.length > 0 ? <div>{errors.name}</div> : null}
-                    <div>{errors.role}</div>
-                    <div>{errors.email}</div>
-                    <div>{errors.password}</div>
-                    <div>{errors.terms}</div>
-                </div> */}
+                <div className="name">
+                    <h4>Build Your Own Pizza!</h4>
+                    <label>Please enter your name&nbsp;
+                        <input 
+                        type="text"
+                        id='name-input'
+                        value={values.name}
+                        onChange={onChange}
+                        name="name"
+                        placeholder="insert name here.."
+                        />
+                        <div>{errors.name}</div>
+                    </label>
+                </div>
                 
-                <label>Please enter your name&nbsp;
-                    <input 
-                    type="text"
-                    id='name-input'
-                    value={values.name}
-                    onChange={onChange}
-                    name="name"
-                    placeholder="insert name here.."
-                    />
-                </label>
-                <div className="size-label">
+                <div className="label">
                     <h3>Please choose a Size</h3>
                     <h4>Required</h4>
+                    <div>{errors.size}</div>
                 </div>
   
                 <label>Size
@@ -57,6 +60,12 @@ export default function OrderForm(props) {
                         <option value='Large'>Large</option>
                     </select>
                 </label>
+
+                <div className="label">
+                    <h3>Please Choose a Sauce</h3>
+                    <h4>Required</h4>
+                    <div>{errors.sauce}</div>
+                </div>
 
                 <div className="radio">
                     <label>Red Sauce
@@ -97,39 +106,74 @@ export default function OrderForm(props) {
                     </label>
                 </div>
 
-                <label>Email
-                    <input
-                    type="email"
-                    value={values.email} //setup in app.js and passed down
-                    onChange={onChange}
-                    name="email"
-                    placeholder="insert email here.."
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$"
-                    />
-                </label>
+                <div className="label">
+                    <h3>Add Toppings</h3>
+                    <h4>Choose up to 4</h4>
+                </div>
 
-                <label>Password
-                    <input
-                    type="password"
-                    value={values.password} //setup in app.js and passed down
-                    onChange={onChange}
-                    name="password"
-                    placeholder="Password (8 characters min)"
-                    minlength="8" required
-                    />
-                </label>
-
-                <label>Terms of Service
+                <div className="toppings">
+                    <label>Pepperoni
                     <input 
                     type='checkbox'
-                    name='terms'
-                    checked={values.terms} //this will evaluate to true or false itself
+                    name='pepperoni'
+                    checked={values.pepperoni}
                     onChange={onChange}
                     />
-                </label>
+                    </label>
+
+                    <label>Sausage
+                    <input 
+                    type='checkbox'
+                    name='sausage'
+                    checked={values.sausage}
+                    onChange={onChange}
+                    />
+                    </label>
+
+                    <label>Bacon
+                    <input 
+                    type='checkbox'
+                    name='bacon'
+                    checked={values.bacon}
+                    onChange={onChange}
+                    />
+                    </label>
+
+                    <label>Extra Cheese
+                    <input 
+                    type='checkbox'
+                    name='extraCheese'
+                    checked={values.extraCheese}
+                    onChange={onChange}
+                    />
+                    </label>
+                </div>
+
+                <div className="label">
+                    <h3>Special Instructions</h3>
+                    <h4>Required</h4>
+                </div>
+
+                <div className="special">
+                    <label>Anything else?
+                        <input
+                        id='special-text'
+                        type="text"
+                        value={values.special}
+                        onChange={onChange}
+                        name="special"
+                        placeholder="Anything esle you would like to add?"
+                        />
+                    </label>
+                </div>
 
                 <div className='submit'>
-                    <button disabled={disabled}>submit</button> 
+                    <button 
+                        id='order-button' 
+                        disabled={disabled}
+                    >
+                        Add to Order
+                    </button> 
                 </div>
                 
             </div>

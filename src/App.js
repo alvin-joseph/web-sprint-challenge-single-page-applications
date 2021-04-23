@@ -4,6 +4,14 @@ import axios from 'axios';
 
 import * as yup from 'yup';
 
+//importing components
+import Home from './components/Home'
+import OrderForm from './components/OrderForm'
+import OrderDetails from "./components/OrderDetails";
+
+//importing schema
+import schema from './validation/formSchema'
+
 //set initial states
 const initialFormValues = {
   //text input
@@ -18,7 +26,6 @@ const initialFormValues = {
   sausage: false,
   bacon: false,
   extraCheese: false,
-  noToppings: true,
 }
 
 const initialFormErrors = {
@@ -27,12 +34,12 @@ const initialFormErrors = {
   sauce: '',
 }
 
-const initialOrder = [];
+const initialOrders = [];
 const initialDisabled = true;
 
 const App = () => {
   //state
-  const [order, setOrder] = useState(initialOrder)          
+  const [orders, setOrders] = useState(initialOrders)          
   const [formValues, setFormValues] = useState(initialFormValues)
   const [formErrors, setFormErrors] = useState(initialFormErrors) 
   const [disabled, setDisabled] = useState(initialDisabled)
@@ -40,9 +47,10 @@ const App = () => {
   const postNewOrder = newOrder => {
     //posting new order to api
     axios
-    .post('https://reqres.in/api/orders')
+    .post('https://reqres.in/api/orders', newOrder)
     .then(res => {
-      setOrder([...order, res.data])
+      console.log(res.data)
+      setOrders([...orders, res.data])
       setFormValues(initialFormValues);
     })
     .catch(err => {
@@ -51,6 +59,17 @@ const App = () => {
   }
 
   const inputChange = (name, value) => {
+    yup
+      .reach(schema, name)
+      .validate(value)
+      .then(() => {
+        setFormErrors({...formErrors,[name]: "",});
+      })
+      .catch(err => {
+        setFormErrors({...formErrors, [name]: err.errors[0],
+        });
+      });
+
     setFormValues({
       ...formValues, [name]: value
     })
@@ -62,11 +81,12 @@ const App = () => {
       special: formValues.special.trim(),
       size: formValues.size.trim(),
       sauce: formValues.sauce.trim(),
-      toppings: ['pepperoni', 'sausage', 'bacon', 'extraCheese', 'noToppings']
+      toppings: ['pepperoni', 'sausage', 'bacon', 'extraCheese']
       .filter(topping => formValues[topping])
     }
 
     postNewOrder(newOrder);
+
   }
 
   useEffect(() => {
@@ -86,6 +106,25 @@ const App = () => {
           <Link to='/pizza'>Order</Link>
         </div>
       </nav>
+      
+      {/* Building switch with routes to components */}
+      <Switch>
+        <Route path='/pizza/details'> 
+          <OrderDetails orders={orders}/>
+        </Route>
+        <Route path='/pizza'>
+          <OrderForm
+            values={formValues}
+            change={inputChange}
+            submit={formSubmit}
+            disabled={disabled}
+            errors={formErrors}
+          />
+        </Route>
+        <Route exact path='/'>
+          <Home />
+        </Route>
+      </Switch>
     </div>
   );
 };
