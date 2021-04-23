@@ -51,7 +51,7 @@ const App = () => {
     axios
     .post('https://reqres.in/api/orders', newOrder)
     .then(res => {
-      console.log(res.data)
+      //console.log(res.data)
       setOrders([...orders, res.data])
       setFormValues(initialFormValues);
     })

@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams, useHistory } from "react-router-dom";
 
 import styled from 'styled-components';
-import { formUrl, theme } from '../theme/theme'
+import { formUrl } from '../theme/theme'
 
 //style
 const FormContainer = styled.div`
@@ -108,7 +108,7 @@ export default function OrderForm(props) {
     }
 
     return (
-        <form className='form container' onSubmit={onSubmit} id='pizza-form'>
+        <form className='form container' onSubmit={onSubmit} id="pizza-form">
             <FormContainer>
                 <div className="header">
                     <h2>Alvin's Pizzaria!</h2>
@@ -119,7 +119,7 @@ export default function OrderForm(props) {
                     <label>Please enter your name&nbsp;
                         <input 
                         type="text"
-                        id='name-input'
+                        id="name-input"
                         value={values.name}
                         onChange={onChange}
                         name="name"
@@ -137,7 +137,7 @@ export default function OrderForm(props) {
 
                 <Dropdown>
                     <label>Size
-                        <select id='size-dropdown' value={values.size} name="size" onChange={onChange}>
+                        <select id="size-dropdown" value={values.size} name="size" onChange={onChange}>
                             <option value=''>-- Please Choose a Size --</option>
                             <option value='Small'>Small</option>
                             <option value='Medium'>Medium</option>
@@ -149,7 +149,7 @@ export default function OrderForm(props) {
                 <Divider>
                     <h3>Please Choose a Sauce</h3>
                     <h4>Required</h4>
-                    <Errors>{errors.sauce}</Errors>
+                    {/* <Errors>{errors.sauce}</Errors> */}
                 </Divider>
 
                 <Radio>
@@ -241,7 +241,7 @@ export default function OrderForm(props) {
                 <Special>
                     <label>Anything else?
                         <input
-                        id='special-text'
+                        id="special-text"
                         type="text"
                         value={values.special}
                         onChange={onChange}
@@ -253,7 +253,7 @@ export default function OrderForm(props) {
 
                 <div className='submit'>
                     <button 
-                        id='order-button' 
+                        id="order-button"
                         disabled={disabled}
                     >
                         Add to Order

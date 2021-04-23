@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styled from 'styled-components';
-import { detailsUrl, theme } from '../theme/theme'
+import { detailsUrl } from '../theme/theme'
 
 const Details = styled.div`
     border: 1px solid rgb(210, 210, 210);
